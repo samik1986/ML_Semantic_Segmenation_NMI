@@ -111,7 +111,7 @@ PyYAML==3.13
 pyzmq==17.1.2
 qtconsole==4.4.1
 reportlab==3.4.0
-requests==2.19.1
+requests==2.20.0
 requests-unixsocket==0.1.5
 requirements-parser==0.2.0
 scikit-image==0.16.2
