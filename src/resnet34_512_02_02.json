@@ -1,0 +1,23 @@
+{
+  "batch_size": 8,
+  "iter_size": 1,
+  "dataset_path": "/home/samik/ProcessDet/wdata/PMD2495_60_120_150/train_full/",
+  "folder": "MBA_Mar6",
+  "lr": 0.0001,
+  "lr_steps": [20, 25],
+  "lr_gamma": 0.2,
+  "nb_epoch": 255,
+  "num_channels": 3,
+  "test_pad": 64,
+  "epoch_size": 8,
+  "predict_batch_size": 4,
+  "results_dir": "/home/samik/ProcessDet/results",
+  "target_cols": 512,
+  "target_rows": 512,
+  "network": "resnet34",
+  "loss": {"dice": 0.2, "bce": 0.8},
+  "optimizer": "adam",
+  "num_classes": 1,
+  "ignore_target_size": false,
+  "warmup": 0
+}
