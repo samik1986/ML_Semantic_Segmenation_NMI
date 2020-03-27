@@ -49,10 +49,10 @@ numpy.random.bit_generator = numpy.random._bit_generator
 from scipy.misc.pilutil import imread, imsave
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-cfg = tf.ConfigProto()
-cfg.gpu_options.allow_growth=True
-sess = tf.Session(config=cfg)
-K.set_session(sess)
+# cfg = tf.ConfigProto()
+# cfg.gpu_options.allow_growth=True
+# sess = tf.Session(config=cfg)
+# K.set_session(sess)
 
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../../")
@@ -79,8 +79,9 @@ RESULTS_DIR = os.path.join(ROOT_DIR, "results/nucleus/")
 # a variety of images to surve as a validation set.
 # VAL_IMAGE_IDS = ['G_PMD1605_034_X9217Y14337', 'R_PMD1605_033_X8705Y4097']
 # VAL_IMAGE_IDS = ['G110_X6145Y7169', 'R110_X7169Y8193']
-VAL_IMAGE_IDS = ['PTM837_114_2561_6145', 'PTM837_113_3585_7681']
-
+# VAL_IMAGE_IDS = ['PTM837_114_2561_6145', 'PTM837_113_3585_7681']
+# VAL_IMAGE_IDS = ['Marmo_Christina_192_7layers_.7NA_1umSpace_AIF_3_5_lossless']
+VAL_IMAGE_IDS = ['x3585y9729', 'x3073y5121']
 ############################################################
 #  Configurations
 ############################################################
@@ -97,12 +98,12 @@ class NucleusConfig(Config):
     NUM_CLASSES = 1 + 1  # Background + nucleus
 
     # Number of training and validation steps per epoch
-    STEPS_PER_EPOCH = (31 - len(VAL_IMAGE_IDS)) // IMAGES_PER_GPU
+    STEPS_PER_EPOCH = (51 - len(VAL_IMAGE_IDS)) // IMAGES_PER_GPU
     VALIDATION_STEPS = max(1, len(VAL_IMAGE_IDS) // IMAGES_PER_GPU)
 
     # Don't exclude based on confidence. Since we have two classes
     # then 0.5 is the minimum anyway as it picks between nucleus and BG
-    DETECTION_MIN_CONFIDENCE = 0.93
+    DETECTION_MIN_CONFIDENCE = 0.8
 
     # Backbone network architecture
     # Supported values are: resnet50, resnet101
@@ -159,7 +160,7 @@ class NucleusInferenceConfig(NucleusConfig):
     IMAGE_RESIZE_MODE = "pad64"
     # Non-max suppression threshold to filter RPN proposals.
     # You can increase this during training to generate more propsals.
-    RPN_NMS_THRESHOLD = 0.95
+    RPN_NMS_THRESHOLD = 0.9
 
 
 ############################################################
@@ -453,11 +454,10 @@ if __name__ == '__main__':
 
     # Create model
     if args.command == "train":
-        model = modellib.MaskRCNN(mode="training", config=config,
-                                  model_dir=args.logs)
+        print(config.IMAGE_SHAPE[:2])
+        model = modellib.MaskRCNN(mode="training", config=config, model_dir=args.logs)
     else:
-        model = modellib.MaskRCNN(mode="inference", config=config,
-                                  model_dir=args.logs)
+        model = modellib.MaskRCNN(mode="inference", config=config, model_dir=args.logs)
 
     # Select weights file to load
     if args.weights.lower() == "coco":

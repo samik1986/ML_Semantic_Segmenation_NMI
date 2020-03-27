@@ -78,8 +78,8 @@ RESULTS_DIR = os.path.join(ROOT_DIR, "results/nucleus/")
 # The dataset doesn't have a standard train/val split, so I picked
 # a variety of images to surve as a validation set.
 # VAL_IMAGE_IDS = ['G_PMD1605_034_X9217Y14337', 'R_PMD1605_033_X8705Y4097']
-# VAL_IMAGE_IDS = ['G110_X6145Y7169', 'R110_X7169Y8193']
-VAL_IMAGE_IDS = ['PTM837_114_2561_6145', 'PTM837_113_3585_7681']
+VAL_IMAGE_IDS = ['G110_X6145Y7169', 'R110_X7169Y8193']
+# VAL_IMAGE_IDS = ['PTM837_114_2561_6145', 'PTM837_113_3585_7681']
 
 ############################################################
 #  Configurations
@@ -97,12 +97,12 @@ class NucleusConfig(Config):
     NUM_CLASSES = 1 + 1  # Background + nucleus
 
     # Number of training and validation steps per epoch
-    STEPS_PER_EPOCH = (31 - len(VAL_IMAGE_IDS)) // IMAGES_PER_GPU
+    STEPS_PER_EPOCH = (28 - len(VAL_IMAGE_IDS)) // IMAGES_PER_GPU
     VALIDATION_STEPS = max(1, len(VAL_IMAGE_IDS) // IMAGES_PER_GPU)
 
     # Don't exclude based on confidence. Since we have two classes
     # then 0.5 is the minimum anyway as it picks between nucleus and BG
-    DETECTION_MIN_CONFIDENCE = 0.93
+    DETECTION_MIN_CONFIDENCE = 0.6
 
     # Backbone network architecture
     # Supported values are: resnet50, resnet101

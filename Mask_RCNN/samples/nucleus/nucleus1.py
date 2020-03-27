@@ -44,9 +44,10 @@ import skimage.io
 import tensorflow as tf
 import keras.backend as K
 from imgaug import augmenters as iaa
+import numpy
+numpy.random.bit_generator = numpy.random._bit_generator
 
-
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 cfg = tf.ConfigProto()
 cfg.gpu_options.allow_growth=True
 sess = tf.Session(config=cfg)
@@ -75,8 +76,8 @@ RESULTS_DIR = os.path.join(ROOT_DIR, "results/nucleus/")
 
 # The dataset doesn't have a standard train/val split, so I picked
 # a variety of images to surve as a validation set.
-VAL_IMAGE_IDS = ['G_PMD1605_034_X9217Y14337', 'R_PMD1605_033_X8705Y4097']
-
+# VAL_IMAGE_IDS = ['G_PMD1605_034_X9217Y14337', 'R_PMD1605_033_X8705Y4097']
+VAL_IMAGE_IDS = ['G110_X6145Y7169', 'R110_X5633Y7681']
 
 ############################################################
 #  Configurations
@@ -94,12 +95,12 @@ class NucleusConfig(Config):
     NUM_CLASSES = 1 + 1  # Background + nucleus
 
     # Number of training and validation steps per epoch
-    STEPS_PER_EPOCH = (35 - len(VAL_IMAGE_IDS)) // IMAGES_PER_GPU
+    STEPS_PER_EPOCH = (28 - len(VAL_IMAGE_IDS)) // IMAGES_PER_GPU
     VALIDATION_STEPS = max(1, len(VAL_IMAGE_IDS) // IMAGES_PER_GPU)
 
     # Don't exclude based on confidence. Since we have two classes
     # then 0.5 is the minimum anyway as it picks between nucleus and BG
-    DETECTION_MIN_CONFIDENCE = 0.8
+    DETECTION_MIN_CONFIDENCE = 0.5
 
     # Backbone network architecture
     # Supported values are: resnet50, resnet101
@@ -121,13 +122,13 @@ class NucleusConfig(Config):
 
     # Non-max suppression threshold to filter RPN proposals.
     # You can increase this during training to generate more propsals.
-    RPN_NMS_THRESHOLD = 0.9
+    RPN_NMS_THRESHOLD = 0.95
 
     # How many anchors per image to use for RPN training
     RPN_TRAIN_ANCHORS_PER_IMAGE = 64
 
     # Image mean (RGB)
-    MEAN_PIXEL = np.array([43.53, 39.56, 48.22])
+    MEAN_PIXEL = np.array([0, 0, 0])
 
     # If enabled, resizes instance masks to a smaller size to reduce
     # memory load. Recommended when using high-resolution images.
@@ -156,7 +157,7 @@ class NucleusInferenceConfig(NucleusConfig):
     IMAGE_RESIZE_MODE = "pad64"
     # Non-max suppression threshold to filter RPN proposals.
     # You can increase this during training to generate more propsals.
-    RPN_NMS_THRESHOLD = 0.7
+    RPN_NMS_THRESHOLD = 0.95
 
 
 ############################################################
@@ -276,7 +277,7 @@ def train(model, dataset_dir, subset):
     print("Train all layers")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=200,
+                epochs=2000,
 		augmentation=augmentation,
 		layers='all')
 
@@ -345,14 +346,55 @@ def mask_to_rle(image_id, mask, scores):
 #  Detection
 ############################################################
 
-def detect(model, image):
-    """Run detection on images."""
-    r = model.detect([image], verbose=0)[0]
-    #print("nucleus1 --------------------->")
-    # print(r["masks"].shape)
-    #print(r["scores"])
-    return(r["masks"])
+# def detect(model, image):
+#     """Run detection on images."""
+#     r = model.detect([image], verbose=0)[0]
+#     #print("nucleus1 --------------------->")
+#     #print(r["masks"].shape)
+#     #print(r["scores"])
+#     return(r["masks"])
 
+
+def detect(model, dataset_dir, subset):
+    """Run detection on images in the given directory."""
+    print("Running on {}".format(dataset_dir))
+
+    # Create directory
+    if not os.path.exists(RESULTS_DIR):
+        os.makedirs(RESULTS_DIR)
+    submit_dir = "submit_{:%Y%m%dT%H%M%S}".format(datetime.datetime.now())
+    submit_dir = os.path.join(RESULTS_DIR, submit_dir)
+    os.makedirs(submit_dir)
+
+    # Read dataset
+    dataset = NucleusDataset()
+    dataset.load_nucleus(dataset_dir, subset)
+    dataset.prepare()
+    # Load over images
+    submission = []
+    for image_id in dataset.image_ids:
+        # Load image and run detection
+        image = dataset.load_image(image_id)
+        # Detect objects
+        r = model.detect([image], verbose=0)[0]
+        # Encode image to RLE. Returns a string of multiple lines
+        source_id = dataset.image_info[image_id]["id"]
+        rle = mask_to_rle(source_id, r["masks"], r["scores"])
+        submission.append(rle)
+        # Save image with masks
+        visualize.display_instances(
+            image, r['rois'], r['masks'], r['class_ids'],
+            "CELL", r['scores'],
+            show_bbox=False, show_mask=True,
+            title="Predictions")
+        plt.savefig("{}/{}.png".format(submit_dir, dataset.image_info[image_id]["id"]))
+
+    # Save to csv file
+    submission = "ImageId,EncodedPixels\n" + "\n".join(submission)
+    file_path = os.path.join(submit_dir, "submit.csv")
+    with open(file_path, "w") as f:
+        f.write(submission)
+    print("Saved to ", submit_dir)
 
 ############################################################
 #  Command Line

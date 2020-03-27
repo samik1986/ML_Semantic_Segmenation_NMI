@@ -44,6 +44,8 @@ import skimage.io
 import tensorflow as tf
 import keras.backend as K
 from imgaug import augmenters as iaa
+import numpy
+numpy.random.bit_generator = numpy.random._bit_generator
 
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
@@ -75,7 +77,7 @@ RESULTS_DIR = os.path.join(ROOT_DIR, "results/nucleus/")
 
 # The dataset doesn't have a standard train/val split, so I picked
 # a variety of images to surve as a validation set.
-VAL_IMAGE_IDS = ['G_PMD1605_034_X9217Y14337', 'R_PMD1605_033_X8705Y4097']
+VAL_IMAGE_IDS = ['G110_X6145Y7169', 'R110_X5633Y7681']
 
 
 ############################################################
@@ -94,7 +96,7 @@ class NucleusConfig(Config):
     NUM_CLASSES = 1 + 1  # Background + nucleus
 
     # Number of training and validation steps per epoch
-    STEPS_PER_EPOCH = (35 - len(VAL_IMAGE_IDS)) // IMAGES_PER_GPU
+    STEPS_PER_EPOCH = (28 - len(VAL_IMAGE_IDS)) // IMAGES_PER_GPU
     VALIDATION_STEPS = max(1, len(VAL_IMAGE_IDS) // IMAGES_PER_GPU)
 
     # Don't exclude based on confidence. Since we have two classes
@@ -156,7 +158,7 @@ class NucleusInferenceConfig(NucleusConfig):
     IMAGE_RESIZE_MODE = "pad64"
     # Non-max suppression threshold to filter RPN proposals.
     # You can increase this during training to generate more propsals.
-    RPN_NMS_THRESHOLD = 0.7
+    RPN_NMS_THRESHOLD = 0.8
 
 
 ############################################################
@@ -214,7 +216,7 @@ class NucleusDataset(utils.Dataset):
         # Read mask files from .png image
         mask = []
         for f in next(os.walk(mask_dir))[2]:
-            if f.endswith(".png"):
+            if f.endswith(".tif"):
                 m = skimage.io.imread(os.path.join(mask_dir, f)).astype(np.uint8)
                 mask.append(m)
         mask = np.stack(mask, axis=-1)
