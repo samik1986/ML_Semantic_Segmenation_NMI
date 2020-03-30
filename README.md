@@ -24,13 +24,13 @@ $ source ~/venv/bin/activate
 
 ### Step 1 
 
-**Folder Structure **
+**Folder Structure**
 
 Images folder : /data/Train/images/[...]_img.tif
 
 Masks folder : /data/Train/masks2m/[...]_img.png [0,255]
 
-**Training ALBU **
+**Training ALBU**
 
 ```
 (venv)#src/preprocessing$ tif2rgb #Images_Folder <if images are grayscale>
@@ -41,5 +41,5 @@ Masks folder : /data/Train/masks2m/[...]_img.png [0,255]
 (venv)#src$ python3 train_eval.py resnet34_512_02_02.json --training
 ```
 
-** The hyperparameters of the training are in src/resnet34_512_02_02.json **
+**The hyperparameters of the training are in src/resnet34_512_02_02.json**
 
