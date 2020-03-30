@@ -51,7 +51,7 @@ Masks folder : /data/Train/masks2m/[...]_img.png [0,255]
 
 ### Step 2
 
-**Generate the Data for training DM++
+**Generate the Data for training DM++**
 
 ```
 (venv)morse_code$ python3 wrapperALBU.py 
@@ -60,7 +60,7 @@ Masks folder : /data/Train/masks2m/[...]_img.png [0,255]
 
 Output folder names need to be updated in the code
 
-**Training DM++
+**Training DM++**
 
 ```
 (venv)DM_base$ python3 createData.py
@@ -69,7 +69,7 @@ Output folder names need to be updated in the code
 Input folder names and .npy filename needs to be updated in the code.
 Model name needs to be updated in the code.
 
-** Testing DM++
+**Testing DM++**
 
 Generate ALBU and DM data for testing (same as training)
 
@@ -77,3 +77,10 @@ Generate ALBU and DM data for testing (same as training)
 (venv)DM_base$ python3 tsting.py
 ```
 Trained ModelName, Input folders and Prediction Folder needs to be updated in the code.
+
+**Evaluation**
+
+```
+(venv)ComputeScore$ python3 main.py #AnnotatedMaskFolder #PredictedOutputFolder .
+
+```
