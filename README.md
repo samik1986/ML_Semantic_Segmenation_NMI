@@ -35,10 +35,10 @@ Masks folder : /data/Train/masks2m/[...]_img.png [0,255]
 **Training ALBU**
 
 ```
-(venv)#src/preprocessing$ tif2rgb #Images_Folder <if images are grayscale>
-(venv)#src/preprocessing$ renamer.py #Image_Folder
-(venv)#src/preprocessing$ renamer.py #Masks_Folder png
-(venv)#src$ preprocessing/folds4gen.py #Image_Folder
+(venv)#src/preprocessing$ python3 tif2rgb #Images_Folder <if images are grayscale>
+(venv)#src/preprocessing$ python3 renamer.py #Image_Folder
+(venv)#src/preprocessing$ python3 renamer.py #Masks_Folder png
+(venv)#src$ python3 preprocessing/folds4gen.py #Image_Folder
   
 (venv)#src$ python3 train_eval.py resnet34_512_02_02.json --training
 ```
