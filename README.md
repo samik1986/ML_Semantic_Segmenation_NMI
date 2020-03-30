@@ -26,9 +26,11 @@ $ source ~/venv/bin/activate
 
 **Folder Structure**
 
+```
 Images folder : /data/Train/images/[...]_img.tif
 
 Masks folder : /data/Train/masks2m/[...]_img.png [0,255]
+```
 
 **Training ALBU**
 
@@ -42,4 +44,7 @@ Masks folder : /data/Train/masks2m/[...]_img.png [0,255]
 ```
 
 **The hyperparameters of the training are in src/resnet34_512_02_02.json**
+
+### Step 2
+
 
