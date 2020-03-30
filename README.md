@@ -20,9 +20,9 @@ $ source ~/venv/bin/activate
 (venv)$ cat requirements3.txt | xargs -n 1 pip3 install
 ```
 
-## Process Detection ##
+## Process Detection 
 
-### Step 1 ###
+### Step 1 
 
 ** Folder Structure **
 
