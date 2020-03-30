@@ -22,7 +22,7 @@ $ source ~/venv/bin/activate
 
 ## Process Detection ##
 
-# Step 1 #
+### Step 1 ###
 
 ** Folder Structure **
 
