@@ -70,3 +70,70 @@ def get_mod_TP_FP_FN(gt_path, prop_path, radius=2, threshold=128):
 
 
 
+# input node tuples, return a 8-neighbor graph.
+def __get_neighbor_graph(node_list):
+    G = nx.Graph()
+    G.add_nodes_from(node_list)
+    neighbors = [(0, -1), (0, 1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
+
+    for node in node_list:
+        x, y = node
+        for move in neighbors:
+            dx, dy = move
+            newx, newy = x + dx, y + dy
+            if (newx, newy) in node_list:
+                G.add_edge((x, y), (newx, newy))
+    return G
+
+
+
+# compute the connectivity metric given the ground truth and prediction
+# 1). we randomly selected $N pairs of CONNECTED points (a, b) from the foreground pixels in ground truth picture.
+# 2). Then we found the nearest neighbors (a', b') of these two points in the predictions.
+# Input: ground_truth_path, prediction path, threshold for foreground pixels, #random pairs $N.
+# Output: the image_score, if returns None, means this image is meaningless (no pixels in pred.)
+def get_connectivity(gt_path, prop_path, threshold=128, N=100, Suppress=True):
+    if Suppress:
+        sys.stdout = open(os.devnull, 'a')
+    gt_img = Image.open(gt_path)
+    prop_img = Image.open(prop_path)
+    gt_points, prop_points = __get_image_point(gt_img, 0.1), __get_image_point(prop_img, threshold)
+    print('gt: ', gt_path, ', have #', len(gt_points), 'points.')
+    print('prop: ', prop_path, ', have #', len(prop_points), 'points.')
+
+    # if there is no foreground in the label, skip this image.
+    if len(gt_points) <= 1:
+        sys.stdout = sys.__stdout__
+        return None
+    # otherwise, if no foreground in the prediction, return score = 0.
+    if len(prop_points) <= 1:
+        sys.stdout = sys.__stdout__
+        return 0
+
+    gt_pset = set(gt_points)
+    prop_pset = set(prop_points)
+
+    # Initialize 8-neighbor graph.
+    gt_graph, prop_graph = __get_neighbor_graph(gt_pset), __get_neighbor_graph(prop_pset)
+    # calculate num of components
+    print('ground truth has ', nx.number_connected_components(gt_graph), 'components.')
+    print('prop has ', nx.number_connected_components(prop_graph), 'components.')
+
+    # init nearest-neighbor ball tree of the prediction image
+    prop_nntree = NearestNeighbors(n_neighbors=1, algorithm='ball_tree').fit(prop_points)
+
+    gt_components = [list(c) for c in nx.connected_components(gt_graph)]
+    gt_probabilities = [len(c)/len(gt_graph) for c in gt_components]
+    choices = np.random.choice(len(gt_probabilities), N, p=gt_probabilities)
+    image_score = 0
+    for choice in choices:
+        component = gt_components[choice]
+        comp_length = len(component)
+        random_pair = np.random.choice(comp_length, 2).tolist()
+        a_gt, b_gt = [component[i] for i in random_pair]
+        _, ab_pred = prop_nntree.kneighbors([a_gt, b_gt])
+        a_prop, b_prop = prop_points[ab_pred[0][0]], prop_points[ab_pred[1][0]]
+        # check if a_pred, b_pred is connected.
+        image_score += 1 if nx.has_path(prop_graph, a_prop, b_prop) else 0
+    sys.stdout = sys.__stdout__
+    return image_score / N
