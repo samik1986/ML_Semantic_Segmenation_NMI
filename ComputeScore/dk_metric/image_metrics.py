@@ -4,6 +4,7 @@ import numpy as np
 import sys
 import os
 from sklearn.neighbors import NearestNeighbors
+import networkx as nx
 
 def __get_image_point_gt(nor_img, threshold):
     pixels = np.asarray(nor_img)
