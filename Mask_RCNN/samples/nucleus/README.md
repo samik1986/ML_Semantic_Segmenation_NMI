@@ -38,7 +38,7 @@ python3 nucleus0.py detect --dataset=/path/to/dataset --subset=stage1_test --wei
 
 ### [BFI Cell Detection Model](https://drive.google.com/file/d/1fAXcyNQ3JRJZMLjwG8sc2Ba_QiLfbJgd/view?usp=sharing)
 ```
-python3 nucleus0.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
+python3 nucleus1.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
 ```
 
 ### [Dendrite Detection Model](https://drive.google.com/file/d/1fyPhKl2I2BWzApFIvDQsyW3NE8UkDT7y/view?usp=sharing)
@@ -48,5 +48,5 @@ python3 nucleus_dendrites.py detect --dataset=/path/to/dataset --subset=stage1_t
 
 ### [Passing Axons Detection Model](https://drive.google.com/file/d/12-nlGlVI6WwVMfGjdvLs9JSh5hpHV5uq/view?usp=sharing)
 ```
-python3 nucleus_dendrites.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
+python3 nucleus_passAxons.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
 ```
