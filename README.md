@@ -88,3 +88,4 @@ Models: [MBA](https://drive.google.com/file/d/1vIPGybRvRa0h7pIx8VrLGjZPNknHw_ZR/
 (venv)ComputeScore$ python3 main.py #AnnotatedMaskFolder #PredictedOutputFolder .
 
 ```
+
