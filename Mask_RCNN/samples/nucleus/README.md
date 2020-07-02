@@ -1,4 +1,4 @@
-# Nuclei Counting and Segmentation
+# Semantic Segmentation and Cell Detection
 
 This sample implements both the Cell Detection and Semantic Segmentation Code.
 The goal is to segment individual nuclei in microscopy images.
