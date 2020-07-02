@@ -72,8 +72,10 @@ Python 3.4, TensorFlow 1.3, Keras 2.0.8 and other common packages listed in `req
     python3 setup.py install
     ``` 
 
-### [Segmenting Nuclei in Microscopy Images](samples/nucleus). Built for the [2018 Data Science Bowl](https://www.kaggle.com/c/data-science-bowl-2018)
-Code is in the `samples/nucleus` directory.
+### Semantic Segmentation and Cell Detection in Images](samples/nucleus). 
+Code is in the `samples/nucleus` directory. This is based on the nucleus segmentation code in the Data Science Bowl competion
 
-![Nucleus Segmentation](assets/nucleus_segmentation.png)
+#### Steps to run the code after the setup
+
+
 
