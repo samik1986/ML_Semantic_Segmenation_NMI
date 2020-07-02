@@ -1,5 +1,7 @@
 # Code Repository for ML based Semantic Segmentation of brain cells. 
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3928538.svg)](https://doi.org/10.5281/zenodo.3928538)
+
 **SETUP The Environment:**
 
 ```
