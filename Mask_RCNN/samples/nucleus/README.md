@@ -1,8 +1,8 @@
 # Nuclei Counting and Segmentation
 
-This sample implements the [2018 Data Science Bowl challenge](https://www.kaggle.com/c/data-science-bowl-2018).
+This sample implements both the Cell Detection and Semantic Segmentation Code.
 The goal is to segment individual nuclei in microscopy images.
-The `nucleus.py` file contains the main parts of the code, and the two Jupyter notebooks
+The `nucleus.py` file contains the main parts of the code and the variations for each modality or functionality is also described.
 
 
 ## Command line Usage
@@ -27,6 +27,26 @@ python3 nucleus.py detect --dataset=/path/to/dataset --subset=stage1_test --weig
 ```
 
 
-## Jupyter notebooks
-Two Jupyter notebooks are provided as well: `inspect_nucleus_data.ipynb` and `inspect_nucleus_model.ipynb`.
-They explore the dataset, run stats on it, and go through the detection process step by step.
+## Code Usage for the use of trained model
+
+Save the testing Data in the /path/to/dataset/stage1_test/ and /path/to/weights/ is the downloaded model path.
+
+### [MBA Cell Detection Model](https://drive.google.com/file/d/1vT7kucHYtePIrHnViG-cVBaNYc9fGHl8/view?usp=sharing)
+```
+python3 nucleus0.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
+```
+
+### [BFI Cell Detection Model](https://drive.google.com/file/d/1fAXcyNQ3JRJZMLjwG8sc2Ba_QiLfbJgd/view?usp=sharing)
+```
+python3 nucleus0.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
+```
+
+### [Dendrite Detection Model](https://drive.google.com/file/d/1fyPhKl2I2BWzApFIvDQsyW3NE8UkDT7y/view?usp=sharing)
+```
+python3 nucleus_dendrites.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
+```
+
+### [Passing Axons Detection Model](https://drive.google.com/file/d/12-nlGlVI6WwVMfGjdvLs9JSh5hpHV5uq/view?usp=sharing)
+```
+python3 nucleus_dendrites.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
+```
