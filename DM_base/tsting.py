@@ -106,7 +106,9 @@ def testImages(files1, name1, name2):
         print(out_img.min(), out_img.max())
         img = np.squeeze(out_img[0]) * 255. #* 100000.
         print(img.max())
-        cv2.imwrite("/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/results/" + f1, np.uint8(img))
+        changed_f1 = f1[:-8] + '.tif'
+        # cv2.imwrite("results/" + changed_f1, np.uint8(img))
+        cv2.imwrite("/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/results/" + changed_f1, np.uint8(img))
         # misc.imsave("/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/result/" + f1, img.astype('uint8'))
         
 

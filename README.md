@@ -88,7 +88,7 @@ Input Folder Name (line 238) & Output folder names (line 246) need to be updated
 (venv)DM_base$ python3 tsting.py
 ```
 Input Folder Name (line 56, 57), Output folder names (line 107) & trained model name (line 49) need to be updated in the 'wrapperALBU' code.
-
+Create the output Directory.
 
 **Evaluation**
 
@@ -96,6 +96,8 @@ Input Folder Name (line 56, 57), Output folder names (line 107) & trained model 
 (venv)ComputeScore$ python3 cal_F1.py #AnnotatedMaskFolder #PredictedOutputFolder .
 
 ```
+Use the mask to eliminate the injection region and calculate the score.
+
 
 ## Cell Detection
 

@@ -31,22 +31,22 @@ python3 nucleus.py detect --dataset=/path/to/dataset --subset=stage1_test --weig
 
 Save the testing Data in the /path/to/dataset/stage1_test/ and /path/to/weights/ is the downloaded model path.
 
-### [MBA Cell Detection Model](https://drive.google.com/file/d/1vT7kucHYtePIrHnViG-cVBaNYc9fGHl8/view?usp=sharing)
+### [MBA Cell Detection Model]
 ```
 python3 nucleus0.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
 ```
 
-### [BFI Cell Detection Model](https://drive.google.com/file/d/1fAXcyNQ3JRJZMLjwG8sc2Ba_QiLfbJgd/view?usp=sharing)
+### [BFI Cell Detection Model]
 ```
 python3 nucleus1.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
 ```
 
-### [Dendrite Detection Model](https://drive.google.com/file/d/1fyPhKl2I2BWzApFIvDQsyW3NE8UkDT7y/view?usp=sharing)
+### [Dendrite Detection Model]
 ```
 python3 nucleus_dendrites.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
 ```
 
-### [Passing Axons Detection Model](https://drive.google.com/file/d/12-nlGlVI6WwVMfGjdvLs9JSh5hpHV5uq/view?usp=sharing)
+### [Passing Axons Detection Model]
 ```
 python3 nucleus_passAxons.py detect --dataset=/path/to/dataset --subset=stage1_test --weights=</path/to/weights.h5>
 ```

@@ -9,7 +9,7 @@ import sys
 
 gt_folder = sys.argv[1]
 prop_folder = sys.argv[2]
-output_csv = os.path.join(sys.argv[3], 'scores_dendrites.csv')
+output_csv = os.path.join(sys.argv[3], 'scores.csv')
 
 startt, endt, stepsize = 0.05, 0.9, 0.01
 if len(sys.argv) > 4:
