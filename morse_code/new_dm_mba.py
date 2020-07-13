@@ -12,8 +12,8 @@ import time
 
 
 GAUSS = 2
-OUTDIR = 'temp/'
-PERSISTENCE_THRESHOLD = 8
+OUTDIR = 'temp4/'
+PERSISTENCE_THRESHOLD = 512
 l = 512
 w = 512
 
@@ -85,6 +85,7 @@ def make_png(verts, edges, path, l, w, linestroke=1):
 
 def dm_cal(tile, id):
     start = time.time()
+    print(PERSISTENCE_THRESHOLD)
 # def dm_cal():
     #print('begin testing')
     img = tile
