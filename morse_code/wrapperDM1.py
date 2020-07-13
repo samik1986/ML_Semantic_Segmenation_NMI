@@ -235,16 +235,16 @@ eps = 0.0001
 
 # filePath = '/nfs/data/main/M25/MorseSkeleton_OSUMITRA/TrainingData/180830/test/data/'
 # filePath = '/home/samik/ProcessDet/temp/'
-filePath = '/home/samik/ProcessDet/wdata/PS_Process/train/DM/'
-filePath = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/DM/'
+filePath = '/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/data/'
+# filePath = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/DM/'
 fileList1 =os.listdir(filePath)
 #print(fileList1)
 for fichier in fileList1[:]: # filelist[:] makes a copy of filelist.
    if not(fichier.endswith(".tif")):
        fileList1.remove(fichier)
 #print(fileList1).
-outDir = '/home/samik/ProcessDet/wdata/PS_Process/train/dmOP/'
-outDir = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/dmOP/'
+outDir = '/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/dmOP/'
+# outDir = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/dmOP/'
 os.system("mkdir " +  outDir)
 def dm_fn(tile,id):
         # id = np.random.randint(0,1000)

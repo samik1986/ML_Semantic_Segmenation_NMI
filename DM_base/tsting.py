@@ -33,7 +33,7 @@ from skimage import transform
 from scipy import ndimage
 import numpy as np
 from scipy.ndimage import zoom
-# import torch.nn.functional as F
+from skimage.io import imread
 from keras.callbacks import TensorBoard
 from scipy import misc
 from createNetR import *
@@ -46,15 +46,17 @@ K.set_session(sess)
 
 # model = dmnet()
 
-model = dmnet('dmnet_membrane_4Jan.hdf5')
+model = dmnet('/nfs/data/main/M32/Samik/NMI_models/dmnet_membrane_STP_RT1.hdf5')
 
 # X = np.load("imgTst.npy")
 # Y = np.load("dmTST.npy")
 
 
 
-fileList1 = os.listdir('Test/MBA1605/pred1/')
-fileList2 = os.listdir('Test/MBA1605/dmOP1/')
+filePath1 = '/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/pred/'
+filePath2 = '/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/dmOP/'
+fileList1 = os.listdir(filePath1)
+fileList2 = os.listdir(filePath2)
 # fileList3 = os.listdir('/home/samik/mnt/m25/MorseSkeleton_OSUMITRA/TrainingData/180830/')
 # os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 # config = tf.ConfigProto()
@@ -73,11 +75,11 @@ def testImages(files1, name1, name2):
     #filePath = 'membrane/morseUpdate/'
     for f1 in files1:
         # print(f1)
-        img = misc.imread(name1 + "/" + f1)
+        img = imread(name1 + "/" + f1)
         # print (img.max())
         # print max(max(row) for row in img)
         img = img.astype('float32')
-        dm = misc.imread(name2 + "/" + f1).astype('float32')
+        dm = imread(name2 + "/" + f1[:-8]+'.tif').astype('float32')
         img = img / 255.
         dm = dm / 255.
         print(img.max(), dm.max())       # if img.max():
@@ -101,10 +103,11 @@ def testImages(files1, name1, name2):
         out_img = model.predict([X_arr, Y_arr])
         # out_img = sigmoid(out_img)
 
-        # print(out_img.min(), out_img.max())
+        print(out_img.min(), out_img.max())
         img = np.squeeze(out_img[0]) * 255. #* 100000.
         print(img.max())
-        misc.imsave("results_MBA_1605_Jan/" + f1, img.astype('uint8'))
+        cv2.imwrite("/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/results/" + f1, np.uint8(img))
+        # misc.imsave("/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/result/" + f1, img.astype('uint8'))
         
 
-testImages(fileList1,'Test/MBA1605/pred1/', 'Test/MBA1605/dmOP/')
+testImages(fileList1,filePath1, filePath2)

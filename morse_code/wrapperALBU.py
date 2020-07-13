@@ -41,17 +41,22 @@ from multiprocessing import Pool
 # except RuntimeError:
 #     pass
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+config = tf.ConfigProto()
+config.gpu_options.allow_growth=True
+sess = tf.Session(config=config)
+K.set_session(sess)
 
 #import dm
 # from albu import test_eval
 # from dmp import tst
 
 eps = 0.0001
-filePath = '/home/samik/ProcessDet/wdata/PS_Process/test/images/'
-filePath = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/small_train/train/images/'
+filePath = '/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/data_RGB/'
+# filePath = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/small_train/train/images/'
 fileList1 = os.listdir(filePath)
-outDir = '/home/samik/ProcessDet/wdata/PS_Process/test/pred2/'
-outDir = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/small_train/train/pred/'
+outDir = '/nfs/data/main/M32/Samik/data_NMI/data/STP_Process/180830/test/pred/'
+# outDir = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/small_train/train/pred/'
 os.system("mkdir " + outDir)
 #fileList1 ='StitchedImage_Z052_L001.tif'
 #print(fileList1)
@@ -96,7 +101,7 @@ def testImages(files1, inDir, outDir):
 # model_dmp = load_model('dmnet_membraneFT.hdf5')
 
 ## Dingkang: Here I load all four models of albu. Need to put foldi_best.pth files under folder albu_weights.
-models_albu = albu_dingkang.read_model([os.path.join('/home/samik/ProcessDet/results/weights/STP_RT/', 'fold{}_best.pth'.format(i)) for i in range(4)])
+models_albu = albu_dingkang.read_model([os.path.join('/nfs/data/main/M32/Samik/NMI_models/ALBU_models/STP_RT/', 'fold{}_best.pth'.format(i)) for i in range(4)])
 
 # def run():
 #     freeze_support()
