@@ -265,8 +265,8 @@ def testImages(files1, inDir, outDir):
                 # f1 = files1
                 print(L, "------------------>", f1)
                 img = cv2.imread(inDir + "/" + f1, cv2.IMREAD_UNCHANGED)
+                # img = cv2.imread(inDir + "/" + f1, cv2.IMREAD_GRAYSCALE) ## For BFI
                 # print(img.max(), img.min())
-                # img = mpimg.imread(inDir + "/" + f1)
                 # print(img.shape)
                 tile.append(img)
                 id.append(count)
