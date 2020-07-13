@@ -60,7 +60,8 @@ Masks folder : /data/Train/masks2m/[...]_img.png [0,255]
 (venv)morse_code$ python3 wrapperDM1.py <ensure the data is single channel 16-bit for MBA/ grayscale for BFI>
 ```
 
-Output folder names need to be updated in the code
+Input Folder Name (line 55), Output folder names (line 58) & trained model name (line 104) need to be updated in the 'wrapperALBU' code.
+Input Folder Name (line 238) & Output folder names (line 246) need to be updated in the 'wrapperDM1' code.
 
 **Training DM++**
 
@@ -76,11 +77,18 @@ Model name needs to be updated in the code.
 Generate ALBU and DM data for testing (same as training)
 
 ```
+(venv)morse_code$ python3 wrapperALBU.py 
+(venv)morse_code$ python3 wrapperDM1.py <ensure the data is single channel 16-bit for MBA/ grayscale for BFI>
+```
+
+Input Folder Name (line 55), Output folder names (line 58) & trained model name (line 104) need to be updated in the 'wrapperALBU' code.
+Input Folder Name (line 238) & Output folder names (line 246) need to be updated in the 'wrapperDM1' code.
+
+```
 (venv)DM_base$ python3 tsting.py
 ```
-Trained ModelName, Input folders and Prediction Folder needs to be updated in the code.
+Input Folder Name (line 56, 57), Output folder names (line 107) & trained model name (line 49) need to be updated in the 'wrapperALBU' code.
 
-Models: [MBA](https://drive.google.com/file/d/1vIPGybRvRa0h7pIx8VrLGjZPNknHw_ZR/view?usp=sharing), [STP](https://drive.google.com/file/d/1dqcrVn8cC7aLdL4FHF3y393zIe5XTqOe/view?usp=sharing), [BFI](https://drive.google.com/file/d/1e6dyeckLA96FhtVp1rhmG7HMwYZadeL8/view?usp=sharing)
 
 **Evaluation**
 
