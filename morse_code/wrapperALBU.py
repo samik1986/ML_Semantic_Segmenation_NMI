@@ -47,10 +47,11 @@ from multiprocessing import Pool
 # from dmp import tst
 
 eps = 0.0001
-filePath = '/home/samik/ProcessDet/wdata/train/images/'
-# filePath = 'newALB/'
+filePath = '/home/samik/ProcessDet/wdata/PS_Process/test/images/'
+filePath = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/small_train/train/images/'
 fileList1 = os.listdir(filePath)
-outDir = '/home/samik/ProcessDet/wdata/train/pred/'
+outDir = '/home/samik/ProcessDet/wdata/PS_Process/test/pred2/'
+outDir = '/nfs/data/main/M32/Samik/180830/180830_JH_WG_Fezf2LSLflp_CFA_female_processed/TrainingDataProofread/small_train/train/pred/'
 os.system("mkdir " + outDir)
 #fileList1 ='StitchedImage_Z052_L001.tif'
 #print(fileList1)
@@ -87,6 +88,7 @@ def testImages(files1, inDir, outDir):
 #        red_op = np.uint8(np.zeros((h,w,3)))
 #        red_op[:,:,2] = rotated
         cv2.imwrite(outDir + "/" + f1, op)
+        # cv2.imwrite(filePath + "/albu/" + f1, op)
 #
 
 
@@ -94,7 +96,7 @@ def testImages(files1, inDir, outDir):
 # model_dmp = load_model('dmnet_membraneFT.hdf5')
 
 ## Dingkang: Here I load all four models of albu. Need to put foldi_best.pth files under folder albu_weights.
-models_albu = albu_dingkang.read_model([os.path.join('/home/samik/ProcessDet/wts_MBA/', 'fold{}_best.pth'.format(i)) for i in range(4)])
+models_albu = albu_dingkang.read_model([os.path.join('/home/samik/ProcessDet/results/weights/STP_RT/', 'fold{}_best.pth'.format(i)) for i in range(4)])
 
 # def run():
 #     freeze_support()
