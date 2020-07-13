@@ -96,7 +96,7 @@ Create the output Directory.
 (venv)ComputeScore$ python3 cal_F1.py #AnnotatedMaskFolder #PredictedOutputFolder .
 
 ```
-Use the mask to eliminate the injection region and calculate the score.
+Use the mask to eliminate the injection region (/Injection Removal) and calculate the score.
 
 
 ## Cell Detection
