@@ -4,6 +4,8 @@
 
 **SETUP The Environment:**
 
+Install Kakadu
+
 ```
 $ sudo apt-get install python-pip python-dev python-virtualenv
 
