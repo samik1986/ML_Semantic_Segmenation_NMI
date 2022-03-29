@@ -78,7 +78,7 @@ olefile==0.45.1
 opencv-python==3.4.3.18
 pandas==0.25.3
 pandocfilters==1.4.2
-paramiko==2.4.2
+paramiko==2.10.1
 parso==0.3.1
 pexpect==4.6.0
 pgmagick==0.7.5
